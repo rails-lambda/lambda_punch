@@ -1,3 +1,7 @@
+## [0.0.4] - 2021-06-28
+
+- Fix install rake bug. Non-Rails rake doc.
+
 ## [0.0.3] - 2021-06-28
 
 - Add rake runtime dep.

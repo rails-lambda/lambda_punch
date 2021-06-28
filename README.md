@@ -42,6 +42,13 @@ Within your project or [Rails application's](https://lamby.custominktech.com/doc
 RUN bundle exec rake lambda_punch:install
 ```
 
+If you are using `LambdaPunch` with a non-Rails project, add this to your Rake file
+
+```ruby
+spec = Gem::Specification.find_by_name 'lambda_punch'
+load "#{spec.gem_dir}/lib/lambda_punch/tasks/install.rake"
+```
+
 ## 🧰 Usage
 
 Anywhere in your application's code, use the `LambdaPunch.push` method to add blocks of code to your jobs queue.

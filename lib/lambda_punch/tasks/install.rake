@@ -5,7 +5,7 @@ namespace :lambda_punch do
     require 'fileutils'
     FileUtils.mkdir_p '/opt/extensions'
     extension = File.expand_path "#{__dir__}/../extensions/lambdapunch"
-    FileUtils.cp extension '/opt/extensions/'
+    FileUtils.cp extension, '/opt/extensions/'
   end
 
 end
