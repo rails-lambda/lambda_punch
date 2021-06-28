@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    lambda_punch (0.0.2)
+    lambda_punch (0.0.3)
       concurrent-ruby
+      rake
       rb-inotify
       timeout
 
