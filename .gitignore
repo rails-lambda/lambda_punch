@@ -1,4 +1,5 @@
-/.bundle/
+/.bundle/*
+/vendor/bunlde/*
 /.yardoc
 /_yardoc/
 /coverage/

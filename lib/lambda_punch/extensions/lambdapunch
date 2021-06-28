@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+ENV['BUNDLE_GEMFILE'] = "#{ENV['LAMBDA_TASK_ROOT']}/Gemfile"
+require 'bundler/setup'
+require 'lambda_punch'
+
+LambdaPunch.register!
+LambdaPunch.start_worker!
+
+while true do
+  LambdaPunch.loop
+end

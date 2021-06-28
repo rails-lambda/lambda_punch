@@ -1,0 +1,29 @@
+PATH
+  remote: .
+  specs:
+    lambda_punch (0.0.2)
+      concurrent-ruby
+      rb-inotify
+      timeout
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    concurrent-ruby (1.1.9)
+    ffi (1.15.3)
+    minitest (5.14.4)
+    rake (13.0.3)
+    rb-inotify (0.10.1)
+      ffi (~> 1.0)
+    timeout (0.1.1)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  lambda_punch!
+  minitest
+  rake
+
+BUNDLED WITH
+   2.2.21

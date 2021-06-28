@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  lambdapunch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CI=${CI}
+    volumes:
+      - ${PWD}:/var/task:delegated

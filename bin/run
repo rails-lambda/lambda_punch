@@ -3,4 +3,4 @@ set -e
 
 docker-compose run \
   lambdapunch \
-  ./bin/_setup
+  $@
