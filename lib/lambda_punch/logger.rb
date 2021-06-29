@@ -16,8 +16,8 @@ module LambdaPunch
     private
 
     def level
-      l = (@level || ENV['LAMBDA_PUNCH_LOG_LEVEL'] || 'fatal').upcase.to_sym
-      ::Logger.const_defined?(l) ? ::Logger.const_get(l) : ::Logger::FATAL
+      l = (@level || ENV['LAMBDA_PUNCH_LOG_LEVEL'] || 'error').upcase.to_sym
+      ::Logger.const_defined?(l) ? ::Logger.const_get(l) : ::Logger::ERROR
     end
 
   end

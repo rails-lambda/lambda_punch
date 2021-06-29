@@ -84,7 +84,7 @@ If your application integrates with API Gateway (which has a 30 second timeout) 
 
 ### Logging
 
-The default log level is `fatal`, so you will not see any LambdaPunch lines in your logs. However, if you want some low level debugging information on how LambdaPunch is working, you can use this environment variable to change the log level.
+The default log level is `error`, so you will not see any LambdaPunch lines in your logs. However, if you want some low level debugging information on how LambdaPunch is working, you can use this environment variable to change the log level.
 
 ```yaml
 Environment:

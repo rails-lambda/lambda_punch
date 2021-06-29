@@ -26,16 +26,24 @@ module LambdaPunch
         new(event_payload).call
       end
 
+      # A safe and resilient way to call the remote queue.
+      # 
+      def call_queue
+        queue.call
+      rescue DRb::DRbConnError
+        logger.error "Worker#call_queue => DRb::DRbConnError"
+        new_drb_queue
+        queue.call
+      end
+
+      private
+
       # The `@queue` object is the local process' reference to the application `LambdaPunch::Queue`
       # instance which does all the work in the applciation's scope.
       # 
       def queue
         @queue
-      rescue DRb::DRbConnError
-        new_drb_queue
       end
-
-      private
 
       def new_drb_queue
         @queue = DRbObject.new_with_uri(Server.uri)
@@ -58,10 +66,10 @@ module LambdaPunch
     def call
       Timeout.timeout(timeout) { @notifier.process }
     rescue Timeout::Error
-      logger.debug "Worker#call => Function timeout reached."
+      logger.error "Worker#call => Function timeout reached."
     ensure
       @notifier.close
-      self.class.queue.call
+      self.class.call_queue
     end
 
     private

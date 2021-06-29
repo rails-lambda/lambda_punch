@@ -1,3 +1,8 @@
+## [0.0.6] - 2021-06-28
+
+- Ensure Queue is always callable.
+- Change default log level to `error`.
+
 ## [0.0.5] - 2021-06-28
 
 - Ensure Queue is always present.
