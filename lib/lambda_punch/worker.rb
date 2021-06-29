@@ -16,7 +16,7 @@ module LambdaPunch
         require 'timeout'
         require 'rb-inotify'
         DRb.start_service
-        @queue = DRbObject.new_with_uri(Server.uri)
+        new_drb_queue
       end
 
       # Creates a new instance of this object with the event payload from the `LambdaPunch::Api#invoke` 
@@ -31,6 +31,14 @@ module LambdaPunch
       # 
       def queue
         @queue
+      rescue DRb::DRbConnError
+        new_drb_queue
+      end
+
+      private
+
+      def new_drb_queue
+        @queue = DRbObject.new_with_uri(Server.uri)
       end
 
     end

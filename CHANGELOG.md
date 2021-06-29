@@ -1,3 +1,7 @@
+## [0.0.5] - 2021-06-28
+
+- Ensure Queue is always present.
+
 ## [0.0.4] - 2021-06-28
 
 - Fix install rake bug. Non-Rails rake doc.
