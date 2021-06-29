@@ -1,3 +1,7 @@
+## [0.0.7] - 2021-06-28
+
+- Fix queue logger.
+
 ## [0.0.6] - 2021-06-28
 
 - Ensure Queue is always callable.

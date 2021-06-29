@@ -31,7 +31,7 @@ module LambdaPunch
       def call_queue
         queue.call
       rescue DRb::DRbConnError
-        logger.error "Worker#call_queue => DRb::DRbConnError"
+        LambdaPunch.logger.error "Worker#call_queue => DRb::DRbConnError"
         new_drb_queue
         queue.call
       end

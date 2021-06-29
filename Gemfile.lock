@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lambda_punch (0.0.6)
+    lambda_punch (0.0.7)
       concurrent-ruby
       rake
       rb-inotify
