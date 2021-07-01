@@ -64,7 +64,7 @@ module LambdaPunch
     # also ensures any clean up is done. For example, closing file notifications.
     #
     def call
-      Timeout.timeout(timeout) { @notifier.process }
+      Timeout.timeout(timeout) { @notifier.process unless invoked? }
     rescue Timeout::Error
       logger.error "Worker#call => Function timeout reached."
     ensure
