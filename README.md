@@ -72,7 +72,11 @@ end
 
 ### ActiveJob
 
-🚧 COMING SOON 🚧 - A simple ActiveJob adapter...
+You can use LambdaPunch with Rails' ActiveJob. **For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/customink/lambdakiq) gem.**
+
+```ruby
+config.active_job.queue_adapter = :lambda_punch
+```
 
 ### Timeouts
 
@@ -80,7 +84,7 @@ Your function's timeout is the max amount to handle the request and process all 
 
 If your application integrates with API Gateway (which has a 30 second timeout) then it is possible your function can be set with a higher timeout to perform background work. Since work is done after each invoke, the LambdaPunch queue should be empty when your function receives the `SHUTDOWN` event. If jobs are in the queue when this happens they will have two seconds max to work them down before being lost.
 
-**For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/customink/lambdakiq) gem. A drop-in replacement for [Sidekiq](https://github.com/mperham/sidekiq) when running Rails in AWS Lambda using the [Lamby](https://lamby.custominktech.com/) gem.**
+**For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/customink/lambdakiq) gem.**
 
 ### Logging
 
@@ -90,6 +94,14 @@ The default log level is `error`, so you will not see any LambdaPunch lines in y
 Environment:
   Variables:
     LAMBDA_PUNCH_LOG_LEVEL: debug
+```
+
+### Errors
+
+As jobs are worked off the queue, all job errors are simply logged. If you want to customize this, you can set your own error handler.
+
+```ruby
+LambdaPunch.error_handler = lambda { |e| ... }
 ```
 
 ## 📊 CloudWatch Metrics

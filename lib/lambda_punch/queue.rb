@@ -18,8 +18,7 @@ module LambdaPunch
         begin
           job.call
         rescue => e
-          logger.error "Queue#call::error => #{e.message}"
-          # ...
+          LambdaPunch.error_handler.call(e)
         end
       end
       true
@@ -33,9 +32,5 @@ module LambdaPunch
       self.class.jobs
     end
 
-    def logger
-      LambdaPunch.logger
-    end
-    
   end
 end

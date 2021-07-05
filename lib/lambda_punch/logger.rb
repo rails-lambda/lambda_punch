@@ -1,23 +1,23 @@
 module LambdaPunch
   class Logger
 
+    attr_reader :level
+
+    def initialize
+      @level = (ENV['LAMBDA_PUNCH_LOG_LEVEL'] || 'error').upcase.to_sym
+    end
+
     def logger
       @logger ||= ::Logger.new(STDOUT).tap do |l| 
-        l.level = level
+        l.level = logger_level
         l.formatter = proc { |_s, _d, _p, m| "[LambdaPunch] #{m}\n" }
       end
     end
 
-    def level=(value)
-      @level = value.to_s
-      @logger = nil
-    end
-
     private
 
-    def level
-      l = (@level || ENV['LAMBDA_PUNCH_LOG_LEVEL'] || 'error').upcase.to_sym
-      ::Logger.const_defined?(l) ? ::Logger.const_get(l) : ::Logger::ERROR
+    def logger_level
+      ::Logger.const_defined?(@level) ? ::Logger.const_get(@level) : ::Logger::ERROR
     end
 
   end

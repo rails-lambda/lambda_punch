@@ -64,7 +64,7 @@ module LambdaPunch
     # also ensures any clean up is done. For example, closing file notifications.
     #
     def call
-      Timeout.timeout(timeout) { @notifier.process unless invoked? }
+      timeout { @notifier.process unless invoked? }
     rescue Timeout::Error
       logger.error "Worker#call => Function timeout reached."
     ensure
@@ -76,10 +76,11 @@ module LambdaPunch
 
     # The Notifier's watch handler would set this instance variable to `true`. We also return `true`
     # if the extension's invoke palyload event has a `requestId` matching what the handler has written
-    # to the `LambdaPunch::Notifier` file location. See also `request_ids_match?` method.
+    # to the `LambdaPunch::Notifier` file location. See also `request_ids_match?` method. Lastly if 
+    # the timeout 
     #
     def invoked?
-      @invoked || request_ids_match?
+      @invoked || request_ids_match? || timed_out?
     end
 
     # The unique AWS reqeust id that both the extension and handler receive for each invoke. This one
@@ -102,13 +103,29 @@ module LambdaPunch
       request_id_payload == (request_id_notifier || Notifier.request_id)
     end
 
-    # The function's timeout in seconds using the `INVOKE` event payload's `deadlineMs` value.
+    # A safe timeout method which accounts for a 0 or negative timeout value.
     # 
     def timeout
+      @timeout = timeout_seconds
+      if timed_out?
+        yield
+      else
+        Timeout.timeout(@timeout) { yield }
+      end
+    end
+
+    # Helps guard for deadline milliseconds in the past.
+    # 
+    def timed_out?
+      @timeout == 0 || @timeout < 0
+    end
+
+    # The function's timeout in seconds using the `INVOKE` event payload's `deadlineMs` value.
+    # 
+    def timeout_seconds
       deadline_milliseconds = @event_payload['deadlineMs']
       deadline = Time.at(deadline_milliseconds / 1000.0)
-      deadline_timeout = deadline - Time.now
-      deadline_timeout > 0 ? deadline_timeout : 0
+      deadline - Time.now
     end
 
     # Our `LambdaPunch::Notifier` instance callback.

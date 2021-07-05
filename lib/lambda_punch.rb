@@ -13,7 +13,10 @@ require 'lambda_punch/server'
 require 'lambda_punch/worker'
 require 'lambda_punch/version'
 require 'lambda_punch/notifier'
-require 'lambda_punch/railtie' if defined?(Rails)
+if defined?(Rails)
+  require 'lambda_punch/railtie'
+  require 'lambda_punch/rails/active_job'
+end
 
 module LambdaPunch
   
@@ -43,6 +46,16 @@ module LambdaPunch
 
   def handled!(context)
     Notifier.handled!(context)
+  end
+
+  def error_handler
+    @error_handler ||= lambda do |e| 
+      logger.error "Queue#call::error => #{e.message}"
+    end
+  end
+
+  def error_handler=(func)
+    @error_handler = func
   end
 
   extend self
