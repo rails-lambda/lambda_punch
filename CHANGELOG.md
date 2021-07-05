@@ -1,3 +1,9 @@
+## [1.0.0] - 2021-07-05
+
+### Added
+
+- Rails ActiveJob support.
+
 ## [0.0.8] - 2021-06-28
 
 - Guard against early notifier.
