@@ -1,3 +1,9 @@
+## [1.0.1] - 2021-07-24
+
+### Changed
+
+- Lazy initialization of Notifier's temp file.
+
 ## [1.0.0] - 2021-07-05
 
 ### Added

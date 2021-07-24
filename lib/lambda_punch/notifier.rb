@@ -2,7 +2,6 @@ module LambdaPunch
   class Notifier
 
     FILE = "#{Dir.tmpdir}/lambdapunch-handled"
-    File.open(FILE, 'w') { |f| f.write('') }
 
     class << self
 
@@ -20,6 +19,7 @@ module LambdaPunch
 
     def initialize
       @notifier = INotify::Notifier.new
+      File.open(FILE, 'w') { |f| f.write('') } unless File.exist?(FILE)
     end
 
     def watch
