@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "concurrent-ruby"
   spec.add_dependency "rake"
   spec.add_dependency "rb-inotify"
-  spec.add_dependency "timeout"
+  spec.add_dependency "timeout", "~> 0.1.1"
   spec.add_development_dependency "minitest-focus"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rails"
