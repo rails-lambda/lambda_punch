@@ -15,6 +15,10 @@ module LambdaPunch
         File.read(FILE)
       end
 
+      def tmp_file
+        FILE
+      end
+
     end
 
     def initialize
