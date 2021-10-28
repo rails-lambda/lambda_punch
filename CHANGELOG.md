@@ -1,11 +1,14 @@
-## [1.0.2] - 2021-10-27
+## [1.0.3] - 2021-10-27
+
+### Added
+
+-
 
 ### Changed
 
-- Lock timeout gem to 0.1.x
-- Ensure rake is required when loading railtie tasks.
+- Remove timeout version lock.
 
-## [1.0.1] - 2021-07-24
+## [1.0.2] - 2021-07-24
 
 ### Changed
 

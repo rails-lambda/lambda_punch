@@ -58,6 +58,10 @@ module LambdaPunch
     @error_handler = func
   end
 
+  def tmp_file
+    Notifier.tmp_file
+  end
+
   extend self
 
 end

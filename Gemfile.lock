@@ -1,11 +1,11 @@
 PATH
   remote: .
   specs:
-    lambda_punch (1.0.2)
+    lambda_punch (1.0.3)
       concurrent-ruby
       rake
       rb-inotify
-      timeout (~> 0.1.1)
+      timeout
 
 GEM
   remote: https://rubygems.org/
@@ -137,7 +137,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     thor (1.1.0)
-    timeout (0.1.1)
+    timeout (0.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.5)
