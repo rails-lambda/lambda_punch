@@ -1,3 +1,5 @@
+require 'rake'
+
 namespace :lambda_punch do
 
   desc "Install the LambdaPunch Lambda Extension."
