@@ -59,12 +59,11 @@ LambdaPunch.push do
 end
 ```
 
-For example, if you are using Rails with AWS Lambda via the [Lamby](https://lamby.custominktech.com/) gem along with [New Relic APM](https://dev.to/aws-heroes/using-new-relic-apm-with-rails-on-aws-lambda-51gi) here is how your handler function might appear to ensure their metrics are flushed after each request.
+For example, if you are using Rails with AWS Lambda via the [Lamby](https://lamby.custominktech.com/)  v4 (or higher) gem along with [New Relic APM](https://dev.to/aws-heroes/using-new-relic-apm-with-rails-on-aws-lambda-51gi) here is how you configure the handled proc called after `Lamby.cmd` in an `ensure` block. This will force metrics to be flushed after each request.
 
 ```ruby
-def handler(event:, context:)
-  Lamby.handler $app, event, context
-ensure
+# config/environments/production.rb
+config.lambda.handled_proc = Proc.new do |_event, context|
   LambdaPunch.push { NewRelic::Agent.agent.flush_pipe_data }
   LambdaPunch.handled!(context)
 end
