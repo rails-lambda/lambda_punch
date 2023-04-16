@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'rake'
+
+load "#{spec.gem_dir}/lib/lambda_punch/tasks/install.rake"
+
+command = ARGV[0] || 'install'
+
+Rake::Task["lambda_punch:#{command}"].invoke
