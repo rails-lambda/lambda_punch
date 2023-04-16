@@ -18,35 +18,36 @@ The LambdaPunch extension process is very small and lean. It only requires a few
 
 ## 🎁 Installation
 
-Add this line to your project's `Gemfile` and then make sure to `bundle install` afterward.
+Add this line to your project's `Gemfile` and then make sure to `bundle install` afterward. It is only needed in the `production` group.
 
 ```ruby
 gem 'lambda_punch'
 ```
 
-Now, within your application's handler file, make sure to start the LambdaPunch DRb server outside of your handler method. Within the handler method, add an `ensure` section that lets the extension process know the request is done.
+Within your project or [Rails application's](https://lamby.custominktech.com/docs/anatomy) `Dockerfile`, add the following. Make sure you do this before you `COPY` your code. The idea is to implicitly use the default `USER root` since it needs permissions to create an `/opt/extensions` directory.
+
+```dockerfile
+RUN gem install lambda_punch && lambda_punch install
+```
+
+Installation with AWS Lambda via the [Lamby](https://lamby.custominktech.com/) v4 (or higher) gem can be done using Lamby's `handled_proc` config. For example, appends these to your `config/environments/production.rb` file. Here we are ensuring that the LambdaPunch DRb server is running and that after each Lamby request we notify LambdaPunch.
+
+```ruby
+config.to_prepare { LambdaPunch.start_server! }
+config.lamby.handled_proc = Proc.new do |_event, context|
+  LambdaPunch.handled!(context)
+end
+```
+
+If you are using an older version of Lamby or a simple Ruby project with your own handler method, the installation would look something like this:
 
 ```ruby
 LambdaPunch.start_server!
-
 def handler(event:, context:)
   # ...
 ensure
   LambdaPunch.handled!(context)
 end
-```
-
-Within your project or [Rails application's](https://lamby.custominktech.com/docs/anatomy) `Dockerfile`, after you copy your code, add this `RUN` command to install the extension within your container's `/opt/extensions` directory.
-
-```dockerfile
-RUN bundle exec rake lambda_punch:install
-```
-
-If you are using `LambdaPunch` with a non-Rails project, add this to your Rake file
-
-```ruby
-spec = Gem::Specification.find_by_name 'lambda_punch'
-load "#{spec.gem_dir}/lib/lambda_punch/tasks/install.rake"
 ```
 
 ## 🧰 Usage
@@ -59,11 +60,11 @@ LambdaPunch.push do
 end
 ```
 
-For example, if you are using Rails with AWS Lambda via the [Lamby](https://lamby.custominktech.com/)  v4 (or higher) gem along with [New Relic APM](https://dev.to/aws-heroes/using-new-relic-apm-with-rails-on-aws-lambda-51gi) here is how you configure the handled proc called after `Lamby.cmd` in an `ensure` block. This will force metrics to be flushed after each request.
+A common use case would be to ensure the [New Relic APM](https://dev.to/aws-heroes/using-new-relic-apm-with-rails-on-aws-lambda-51gi) flushes its data after each request. Using Lamby in your `config/environments/production.rb`  file would look like this:
 
 ```ruby
-# config/environments/production.rb
-config.lambda.handled_proc = Proc.new do |_event, context|
+config.to_prepare { LambdaPunch.start_server! }
+config.lamby.handled_proc = Proc.new do |_event, context|
   LambdaPunch.push { NewRelic::Agent.agent.flush_pipe_data }
   LambdaPunch.handled!(context)
 end

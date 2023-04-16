@@ -1,8 +1,14 @@
+## [1.1.0] - 2023-04-16
+
+### Added
+
+- New `lambda_punch` install interface.
+
 ## [1.0.3] - 2021-10-27
 
 ### Added
 
--
+- Any Timeout Gem. Tempfile Location Interface 
 
 ### Changed
 
