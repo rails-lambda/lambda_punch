@@ -24,10 +24,16 @@ Add this line to your project's `Gemfile` and then make sure to `bundle install`
 gem 'lambda_punch'
 ```
 
-Within your project or [Rails application's](https://lamby.custominktech.com/docs/anatomy) `Dockerfile`, add the following. Make sure you do this before you `COPY` your code. The idea is to implicitly use the default `USER root` since it needs permissions to create an `/opt/extensions` directory.
+Within your project or [Rails application's](https://lamby.custominktech.com/docs/anatomy) `Dockerfile`, add the following. Make sure you do this before you `COPY` your code. The idea is to implicitly use the default `USER root` since it needs permission to create an `/opt/extensions` directory.
 
 ```dockerfile
 RUN gem install lambda_punch && lambda_punch install
+```
+
+LambdaPunch uses the `LAMBDA_TASK_ROOT` environment variable to find your project's Gemfile. If you are using a provided AWS Runtime container, this should be set for you to `/var/task`. However, if you are using your own base image, make sure to set this to your project directory.
+
+```dockerfile
+ENV LAMBDA_TASK_ROOT=/app
 ```
 
 Installation with AWS Lambda via the [Lamby](https://lamby.custominktech.com/) v4 (or higher) gem can be done using Lamby's `handled_proc` config. For example, appends these to your `config/environments/production.rb` file. Here we are ensuring that the LambdaPunch DRb server is running and that after each Lamby request we notify LambdaPunch.
