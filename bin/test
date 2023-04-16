@@ -1,6 +1,4 @@
 #!/bin/sh
 set -e
 
-docker-compose run \
-  lambdapunch \
-  ./bin/_test
+bundle exec rake test

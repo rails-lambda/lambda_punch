@@ -1,3 +1,9 @@
+## [1.1.1] - 2023-04-16
+
+### Fixed
+
+- The `lambda_punch` install file.
+
 ## [1.1.0] - 2023-04-16
 
 ### Added

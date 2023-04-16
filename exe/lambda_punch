@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'rake'
 
+spec = Gem::Specification.find_by_name 'lambda_punch'
 load "#{spec.gem_dir}/lib/lambda_punch/tasks/install.rake"
 
 command = ARGV[0] || 'install'

@@ -1,0 +1,19 @@
+{
+  "name": "lambda_punch",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:latest": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true
+      },
+      "extensions": []
+    }
+  },
+  "postCreateCommand": ".devcontainer/postCreate.sh",
+  "remoteUser": "vscode"
+}

@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
 
-docker-compose run \
-  lambdapunch \
-  ./bin/_setup
+echo '== Installing dependencies =='
+bundle config set --local path 'vendor/bundle'
+bundle install

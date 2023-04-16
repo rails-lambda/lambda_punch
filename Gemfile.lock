@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lambda_punch (1.0.3)
+    lambda_punch (1.1.1)
       concurrent-ruby
       rake
       rb-inotify
@@ -74,7 +74,7 @@ GEM
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     erubi (1.10.0)
-    ffi (1.15.4)
+    ffi (1.15.5)
     globalid (0.5.2)
       activesupport (>= 5.0)
     i18n (1.8.10)
@@ -87,11 +87,13 @@ GEM
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     minitest-focus (1.3.1)
       minitest (>= 4, < 6)
     nio4r (2.5.8)
-    nokogiri (1.12.5-x86_64-linux)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -137,7 +139,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     thor (1.1.0)
-    timeout (0.2.0)
+    timeout (0.3.2)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.5)
@@ -146,6 +148,8 @@ GEM
     zeitwerk (2.5.1)
 
 PLATFORMS
+  aarch64-linux
+  arm64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
