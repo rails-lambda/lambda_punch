@@ -36,6 +36,16 @@ class QueueTest < LambdaPunchSpec
     expect(out).must_include 'hell'
   end
 
+  it 'will log error backtraces' do
+    LambdaPunch.push do 
+      hash_with_default_error = HashWithIndifferentAccess.new { |h| raise 'stack' }
+      hash_with_default_error['boom']
+    end
+    out = capture(:stdout) { LambdaPunch::Queue.new.call }
+    expect(out).must_include 'lambda_punch/test/cases/queue_test.rb'
+    expect(out).must_include 'gems/activesupport'
+  end
+
   it 'will allow a custom error handler to be used' do
     LambdaPunch.error_handler = lambda { |e| puts("test-#{e.class.name}") }
     LambdaPunch.push { raise('hell') }

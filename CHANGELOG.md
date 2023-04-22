@@ -1,3 +1,9 @@
+## [1.1.3] - 2023-04-22
+
+### Added
+
+- Test for `error_handler` stack trace.
+
 ## [1.1.2] - 2023-04-22
 
 ### Added
