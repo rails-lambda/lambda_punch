@@ -1,6 +1,6 @@
 ![LambdaPunch](https://user-images.githubusercontent.com/2381/123561512-c23fb580-d776-11eb-9780-71d606cd8f2c.png)
 
-![Test](https://github.com/customink/lambda_punch/workflows/Test/badge.svg)
+[![Test](https://github.com/customink/lambda_punch/actions/workflows/test.yml/badge.svg)](https://github.com/customink/lambda_punch/actions/workflows/test.yml)
 
 # 👊 LambdaPunch
 
