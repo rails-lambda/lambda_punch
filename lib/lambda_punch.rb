@@ -51,6 +51,7 @@ module LambdaPunch
   def error_handler
     @error_handler ||= lambda do |e| 
       logger.error "Queue#call::error => #{e.message}"
+      logger.error e.backtrace[0..10].join("\n")
     end
   end
 

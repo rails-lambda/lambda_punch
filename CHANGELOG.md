@@ -1,3 +1,9 @@
+## [1.1.2] - 2023-04-22
+
+### Added
+
+- The `error_handler` will now print the first 10 lines of a stack trace.
+
 ## [1.1.1] - 2023-04-16
 
 ### Fixed
