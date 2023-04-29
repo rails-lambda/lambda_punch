@@ -1,12 +1,12 @@
 ![LambdaPunch](https://user-images.githubusercontent.com/2381/123561512-c23fb580-d776-11eb-9780-71d606cd8f2c.png)
 
-[![Test](https://github.com/customink/lambda_punch/actions/workflows/test.yml/badge.svg)](https://github.com/customink/lambda_punch/actions/workflows/test.yml)
+[![Test](https://github.com/rails-lambda/lambda_punch/actions/workflows/test.yml/badge.svg)](https://github.com/rails-lambda/lambda_punch/actions/workflows/test.yml)
 
 # 👊 LambdaPunch
 
-<a href="https://lamby.custominktech.com"><img src="https://raw.githubusercontent.com/customink/lamby/master/images/social2.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="450" style="margin-left:1rem;margin-bottom:1rem;" /></a>Asynchronous background job processing for AWS Lambda with Ruby using [Lambda Extensions](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html). Inspired by the [SuckerPunch](https://github.com/brandonhilkert/sucker_punch) gem but specifically tooled to work with Lambda's invoke model.
+<a href="https://lamby.cloud"><img src="https://raw.githubusercontent.com/rails-lambda/lamby/master/images/social2.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="450" style="margin-left:1rem;margin-bottom:1rem;" /></a>Asynchronous background job processing for AWS Lambda with Ruby using [Lambda Extensions](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html). Inspired by the [SuckerPunch](https://github.com/brandonhilkert/sucker_punch) gem but specifically tooled to work with Lambda's invoke model.
 
-**For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/customink/lambdakiq) gem. A drop-in replacement for [Sidekiq](https://github.com/mperham/sidekiq) when running Rails in AWS Lambda using the [Lamby](https://lamby.custominktech.com/) gem.**
+**For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/rails-lambda/lambdakiq) gem. A drop-in replacement for [Sidekiq](https://github.com/mperham/sidekiq) when running Rails in AWS Lambda using the [Lamby](https://lamby.cloud/) gem.**
 
 ## 🏗 Architecture
 
@@ -24,7 +24,7 @@ Add this line to your project's `Gemfile` and then make sure to `bundle install`
 gem 'lambda_punch'
 ```
 
-Within your project or [Rails application's](https://lamby.custominktech.com/docs/anatomy) `Dockerfile`, add the following. Make sure you do this before you `COPY` your code. The idea is to implicitly use the default `USER root` since it needs permission to create an `/opt/extensions` directory.
+Within your project or [Rails application's](https://lamby.cloud/docs/anatomy) `Dockerfile`, add the following. Make sure you do this before you `COPY` your code. The idea is to implicitly use the default `USER root` since it needs permission to create an `/opt/extensions` directory.
 
 ```dockerfile
 RUN gem install lambda_punch && lambda_punch install
@@ -36,7 +36,7 @@ LambdaPunch uses the `LAMBDA_TASK_ROOT` environment variable to find your projec
 ENV LAMBDA_TASK_ROOT=/app
 ```
 
-Installation with AWS Lambda via the [Lamby](https://lamby.custominktech.com/) v4 (or higher) gem can be done using Lamby's `handled_proc` config. For example, appends these to your `config/environments/production.rb` file. Here we are ensuring that the LambdaPunch DRb server is running and that after each Lamby request we notify LambdaPunch.
+Installation with AWS Lambda via the [Lamby](https://lamby.cloud/) v4 (or higher) gem can be done using Lamby's `handled_proc` config. For example, appends these to your `config/environments/production.rb` file. Here we are ensuring that the LambdaPunch DRb server is running and that after each Lamby request we notify LambdaPunch.
 
 ```ruby
 config.to_prepare { LambdaPunch.start_server! }
@@ -78,7 +78,7 @@ end
 
 ### ActiveJob
 
-You can use LambdaPunch with Rails' ActiveJob. **For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/customink/lambdakiq) gem.**
+You can use LambdaPunch with Rails' ActiveJob. **For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/rails-lambda/lambdakiq) gem.**
 
 ```ruby
 config.active_job.queue_adapter = :lambda_punch
@@ -90,7 +90,7 @@ Your function's timeout is the max amount to handle the request and process all 
 
 If your application integrates with API Gateway (which has a 30 second timeout) then it is possible your function can be set with a higher timeout to perform background work. Since work is done after each invoke, the LambdaPunch queue should be empty when your function receives the `SHUTDOWN` event. If jobs are in the queue when this happens they will have two seconds max to work them down before being lost.
 
-**For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/customink/lambdakiq) gem.**
+**For a more robust background job solution, please consider using AWS SQS with the [Lambdakiq](https://github.com/rails-lambda/lambdakiq) gem.**
 
 ### Logging
 
@@ -140,7 +140,7 @@ You can also run the `./bin/console` command for an interactive prompt within th
 
 ## 💖 Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/customink/lambda_punch. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/customink/lambda_punch/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/rails-lambda/lambda_punch. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/rails-lambda/lambda_punch/blob/main/CODE_OF_CONDUCT.md).
 
 ## 👩‍⚖️ License
 
@@ -148,4 +148,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## 🤝 Code of Conduct
 
-Everyone interacting in the LambdaPunch project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/customink/lambda_punch/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the LambdaPunch project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rails-lambda/lambda_punch/blob/main/CODE_OF_CONDUCT.md).
