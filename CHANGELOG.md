@@ -1,3 +1,9 @@
+## [1.1.4] - 2024-06-09
+
+### Changed
+
+- The `LambdaPunch.start_server!` to now rescue `Errno::EADDRINUSE` errors.
+
 ## [1.1.3] - 2023-04-22
 
 ### Added

@@ -20,6 +20,7 @@ module LambdaPunch
     def initialize
       @queue = Queue.new
       DRb.start_service self.class.uri, @queue
+    rescue Errno::EADDRINUSE
     end
 
   end
